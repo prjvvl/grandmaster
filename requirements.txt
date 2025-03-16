@@ -1,0 +1,6 @@
+python-telegram-bot==20.7
+python-dotenv==1.0.0
+websockets==12.0
+aiocron==1.8
+colorlog==6.7.0
+psutil==5.9.6

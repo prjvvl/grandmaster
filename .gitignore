@@ -1,0 +1,18 @@
+# Environment and virtual environment
+.env
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+logs/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+
+hello-world/node_modules
+

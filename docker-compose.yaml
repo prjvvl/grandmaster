@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  grandmaster:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./hello-world:/app/hello-world
+      - ./logs:/app/logs
+      - ./.env:/app/.env
+    env_file:
+      - .env
+    ports:
+      - "8765:8765"  # For WebSocket server
+    restart: unless-stopped

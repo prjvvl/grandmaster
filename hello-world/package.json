@@ -1,0 +1,13 @@
+{
+    "name": "hello-world-client",
+    "version": "1.0.0",
+    "description": "Example Hello World client for Grandmaster",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "ws": "^8.18.1"
+    }
+}
