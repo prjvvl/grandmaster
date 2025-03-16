@@ -5,12 +5,52 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: grandmaster
     volumes:
-      - ./hello-world:/app/hello-world
       - ./logs:/app/logs
       - ./.env:/app/.env
     env_file:
       - .env
     ports:
       - "8765:8765"  # For WebSocket server
+    networks:
+      - grandmaster-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8765/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  js-simple-app:
+    build:
+      context: ./examples/js-simple-app
+      dockerfile: Dockerfile
+    container_name: js-simple-app
+    depends_on:
+      - grandmaster
+    environment:
+      - GRANDMASTER_URL=ws://grandmaster:8765
+      - APP_NAME=js-simple-app
+    networks:
+      - grandmaster-network
+    restart: unless-stopped
+
+  py-monitor-app:
+    build:
+      context: ./examples/py-monitor-app
+      dockerfile: Dockerfile
+    container_name: py-monitor-app
+    depends_on:
+      - grandmaster
+    environment:
+      - GRANDMASTER_URL=ws://grandmaster:8765
+      - APP_NAME=py-monitor-app
+    networks:
+      - grandmaster-network
+    restart: unless-stopped
+
+networks:
+  grandmaster-network:
+    driver: bridge
